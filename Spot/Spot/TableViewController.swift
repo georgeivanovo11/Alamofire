@@ -13,7 +13,7 @@ class TableViewController: UITableViewController
 {
     var searchUrl = "https://api.spotify.com/v1/search?q=Adele&type=track"
     typealias JSONStandard = [String: AnyObject]
-    var names = [String]()
+    var posts = [Post]()
     
     override func viewDidLoad()
     {
@@ -39,14 +39,27 @@ class TableViewController: UITableViewController
             //print(readableJSON)
             if let tracks = readableJSON["tracks"] as? JSONStandard
             {
-                if let items = tracks["items"]
+                if let items = tracks["items"] as? [JSONStandard]
                 {
                     for i in 0 ..< items.count
                     {
-                        let item = items[i] as! JSONStandard
+                        let item = items[i]
+                        //print(item)
                         let name = item["name"] as! String
-                        names.append(name)
-                        self.tableView.reloadData()
+                        
+                        if let album = item["album"] as? JSONStandard
+                        {
+                            if let images = album["images"] as? [JSONStandard]
+                            {
+                                let imageInfo = images[0]
+                                let imageUrl = URL(string: imageInfo["url"] as! String)
+                                let imageData = NSData(contentsOf: imageUrl!) as! Data
+                                let image = UIImage(data: imageData)
+                                
+                                posts.append(Post.init(image: image, name: name))
+                                self.tableView.reloadData()
+                            }
+                        }
                     }
                 }
             }
@@ -63,13 +76,19 @@ extension TableViewController
 {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        return names.count
+        return posts.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")
-        cell?.textLabel?.text = names[indexPath.row]
+        
+        let imageView = cell?.viewWithTag(2) as! UIImageView
+        let labelView = cell?.viewWithTag(1) as! UILabel
+        
+        imageView.image = posts[indexPath.row].image
+        labelView.text = posts[indexPath.row].name
+        
         return cell!
     }
 }

@@ -13,6 +13,7 @@
 		5E3337811E3A704D00D04342 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5E3337801E3A704D00D04342 /* Assets.xcassets */; };
 		5E3337841E3A704D00D04342 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5E3337821E3A704D00D04342 /* LaunchScreen.storyboard */; };
 		5E33378C1E3A707000D04342 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 5E33378B1E3A707000D04342 /* Podfile */; };
+		5E33378E1E3A9C1F00D04342 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E33378D1E3A9C1F00D04342 /* Post.swift */; };
 		73B642E503FF7B7F73D7D77E /* Pods_Spot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAB7D2B0CE6F25C3C13EDB86 /* Pods_Spot.framework */; };
 /* End PBXBuildFile section */
 
@@ -26,6 +27,7 @@
 		5E3337831E3A704D00D04342 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5E3337851E3A704D00D04342 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5E33378B1E3A707000D04342 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
+		5E33378D1E3A9C1F00D04342 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		BAB7D2B0CE6F25C3C13EDB86 /* Pods_Spot.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Spot.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1B9AAA7D83228E5F77B4FE8 /* Pods-Spot.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spot.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Spot/Pods-Spot.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -75,6 +77,7 @@
 			children = (
 				5E3337791E3A704D00D04342 /* AppDelegate.swift */,
 				5E33377B1E3A704D00D04342 /* TableViewController.swift */,
+				5E33378D1E3A9C1F00D04342 /* Post.swift */,
 				5E33377D1E3A704D00D04342 /* Main.storyboard */,
 				5E3337801E3A704D00D04342 /* Assets.xcassets */,
 				5E3337821E3A704D00D04342 /* LaunchScreen.storyboard */,
@@ -215,6 +218,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5E33378E1E3A9C1F00D04342 /* Post.swift in Sources */,
 				5E33377C1E3A704D00D04342 /* TableViewController.swift in Sources */,
 				5E33377A1E3A704D00D04342 /* AppDelegate.swift in Sources */,
 			);
