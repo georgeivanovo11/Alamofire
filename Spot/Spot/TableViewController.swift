@@ -12,18 +12,38 @@ import AVFoundation
 
 var player = AVAudioPlayer()
 
-class TableViewController: UITableViewController
+class TableViewController: UITableViewController, UISearchBarDelegate
 {
-    var searchUrl = "https://api.spotify.com/v1/search?q=David+Garrett&type=track"
+    @IBOutlet weak var searchBar: UISearchBar!
+    var searchUrl = String()
     typealias JSONStandard = [String: AnyObject]
     var posts = [Post]()
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        callAlamo(url: searchUrl)
+        searchBar.delegate = self
     }
+}
 
+
+//MARK:- SearchBar
+extension TableViewController
+{
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar)
+    {
+        let keywords = searchBar.text
+        let finalKeywords = keywords?.replacingOccurrences(of: " ", with: "+")
+        searchUrl = "https://api.spotify.com/v1/search?q=\(finalKeywords!)&type=track"
+        callAlamo(url: searchUrl)
+        self.view.endEditing(true)
+    }
+}
+
+
+//MARK:- Alamofire
+extension TableViewController
+{
     func callAlamo(url: String)
     {
         Alamofire.request(url).responseJSON(completionHandler:
@@ -36,6 +56,7 @@ class TableViewController: UITableViewController
     
     func parseData(JSONData: Data)
     {
+        posts.removeAll()
         do
         {
             var readableJSON = try JSONSerialization.jsonObject(with: JSONData, options: .mutableContainers) as!  JSONStandard
@@ -103,3 +124,4 @@ extension TableViewController
         vc.post = posts[indexPath!]
     }
 }
+
