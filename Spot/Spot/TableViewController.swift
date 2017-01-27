@@ -91,4 +91,13 @@ extension TableViewController
         
         return cell!
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    {
+        let indexPath = self.tableView.indexPathForSelectedRow?.row
+        let vc = segue.destination as! AudioViewController
+        vc.image = posts[indexPath!].image
+        vc.songTitle = posts[indexPath!].name
+        
+    }
 }
