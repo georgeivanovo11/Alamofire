@@ -8,10 +8,13 @@
 
 import UIKit
 import Alamofire
+import AVFoundation
+
+var player = AVAudioPlayer()
 
 class TableViewController: UITableViewController
 {
-    var searchUrl = "https://api.spotify.com/v1/search?q=Adele&type=track"
+    var searchUrl = "https://api.spotify.com/v1/search?q=David+Garrett&type=track"
     typealias JSONStandard = [String: AnyObject]
     var posts = [Post]()
     
@@ -46,6 +49,7 @@ class TableViewController: UITableViewController
                         let item = items[i]
                         //print(item)
                         let name = item["name"] as! String
+                        let previewUrl = item["preview_url"] as! String
                         
                         if let album = item["album"] as? JSONStandard
                         {
@@ -56,7 +60,7 @@ class TableViewController: UITableViewController
                                 let imageData = NSData(contentsOf: imageUrl!) as! Data
                                 let image = UIImage(data: imageData)
                                 
-                                posts.append(Post.init(image: image, name: name))
+                                posts.append(Post.init(image: image, name: name, previewUrl: previewUrl))
                                 self.tableView.reloadData()
                             }
                         }
@@ -96,8 +100,6 @@ extension TableViewController
     {
         let indexPath = self.tableView.indexPathForSelectedRow?.row
         let vc = segue.destination as! AudioViewController
-        vc.image = posts[indexPath!].image
-        vc.songTitle = posts[indexPath!].name
-        
+        vc.post = posts[indexPath!]
     }
 }

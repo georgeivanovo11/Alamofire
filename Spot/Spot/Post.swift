@@ -12,5 +12,5 @@ struct Post
 {
     let image: UIImage!
     let name: String!
-    
+    let previewUrl: String!
 }
