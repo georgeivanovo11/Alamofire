@@ -11,6 +11,7 @@ import Alamofire
 import AVFoundation
 
 var player = AVAudioPlayer()
+var indicator = UIActivityIndicatorView()
 
 class TableViewController: UITableViewController, UISearchBarDelegate
 {
@@ -19,10 +20,19 @@ class TableViewController: UITableViewController, UISearchBarDelegate
     typealias JSONStandard = [String: AnyObject]
     var posts = [Post]()
     
+    let loadingPage : UIView =
+    {
+        let v = UIView()
+        v.backgroundColor = UIColor.white
+        v.translatesAutoresizingMaskIntoConstraints = false
+        return v
+    }()
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
         searchBar.delegate = self
+        indicatorSetup() //INDICATOR INIT!!!
     }
 }
 
@@ -35,8 +45,35 @@ extension TableViewController
         let keywords = searchBar.text
         let finalKeywords = keywords?.replacingOccurrences(of: " ", with: "+")
         searchUrl = "https://api.spotify.com/v1/search?q=\(finalKeywords!)&type=track"
+        indStart() //INDICATOR ON!!!!
         callAlamo(url: searchUrl)
         self.view.endEditing(true)
+    }
+}
+
+//MARK:- Indicator
+extension TableViewController
+{
+    func indicatorSetup()
+    {
+        indicator.hidesWhenStopped = true
+        indicator.activityIndicatorViewStyle = .gray
+        self.tableView.addSubview(indicator)
+        var point = tableView.center
+        point.y = point.y - 50
+        indicator.center = point
+    }
+    
+    func indStart()
+    {
+        indicator.startAnimating()
+        //UIApplication.shared.beginIgnoringInteractionEvents()
+    }
+    
+    func indStop()
+    {
+        //UIApplication.shared.endIgnoringInteractionEvents()
+        indicator.stopAnimating()
     }
 }
 
@@ -82,7 +119,11 @@ extension TableViewController
                                 let image = UIImage(data: imageData)
                                 
                                 posts.append(Post.init(image: image, name: name, previewUrl: previewUrl))
-                                self.tableView.reloadData()
+                                DispatchQueue.main.async(execute:
+                                {
+                                    self.tableView.reloadData()
+                                    self.indStop()  // INDICATOR OFF!!!!!!
+                                })
                             }
                         }
                     }
